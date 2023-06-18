@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.example.androidquiz.Dtos.QuestionDto
+import com.example.androidquiz.Services.QuestionRequestsService
 import java.net.URL
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -22,17 +23,30 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Example of getting questions!!!! toDo: Make parameters choice
+        val service = QuestionRequestsService()
+        val response = service.getQuestions("10", "20", "easy")
+        val questionsModel = service.serializeQuestions(response)
+        val r_questAndAns: MutableList<QuestionAndAnswersModel> = mutableListOf()
+        val r_questAndCorAns: HashMap<String, String> = hashMapOf()
+
+        for (model in questionsModel.results) {
+            val answers: MutableList<String> = mutableListOf(model.correct_answer)
+            for(incorrectAnswer in model.incorrect_answers) {
+                answers.add(incorrectAnswer)
+            }
+            val questAndAnsw = QuestionAndAnswersModel(model.question, answers)
+            r_questAndAns.add(questAndAnsw)
+            r_questAndCorAns.put(model.question, model.correct_answer)
+        }
+
         val button = findViewById<Button>(R.id.button)
-        val questAndCor = mapOf("123" to "1234",
-                                "456" to "4567")
-        val questAndAns = listOf(QuestionAndAnswersModel("123", arrayOf("1234", "45678")),
-                                  QuestionAndAnswersModel("456", arrayOf("1234", "4567")))
         button.setOnClickListener {
 
             val intent = Intent(this, QuestionsActivity::class.java)
 
-            intent.putExtra("questAndAns", ArrayList(questAndAns))
-            intent.putExtra("questAndCor", HashMap(questAndCor))
+            intent.putExtra("questAndAns", ArrayList(r_questAndAns))
+            intent.putExtra("questAndCor", HashMap(r_questAndCorAns))
 
             startActivity(intent)
         }
