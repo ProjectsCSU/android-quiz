@@ -13,7 +13,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     app:strokeWidth="2dp"
-    app:cardBackgroundColor="@color/black">
+    app:cardBackgroundColor="@color/purple_500">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,6 +31,7 @@
             android:innerRadius="0dp"
             android:shape="ring"
             android:thicknessRatio="1.9"
+            android:background="@drawable/header_gradient"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
