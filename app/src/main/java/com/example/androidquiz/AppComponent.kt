@@ -2,7 +2,7 @@ package com.example.androidquiz
 
 import dagger.Component
 
-@Component(modules = [CategoryModule::class])
+@Component(modules = [CategoryModule::class, ViewModule::class])
 interface AppComponent {
-    fun injectCategoryFragment(categoryFragment: CategoryFragment)
+    fun injectFragment(categoryFragment: CategoryFragment)
 }

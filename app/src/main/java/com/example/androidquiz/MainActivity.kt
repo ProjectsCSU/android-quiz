@@ -37,10 +37,10 @@ class MainActivity : AppCompatActivity() {
         val exitButton: Button = findViewById(R.id.exit_button)
 
         startGameButton.setOnClickListener {
-            val intent = Intent(this, QuestionsActivity::class.java)
+            val intent = Intent(this, CategorySelectActivity::class.java)
 
-            intent.putExtra("questAndAns", ArrayList(r_questAndAns))
-            intent.putExtra("questAndCor", HashMap(r_questAndCorAns))
+//            intent.putExtra("questAndAns", ArrayList(r_questAndAns))
+//            intent.putExtra("questAndCor", HashMap(r_questAndCorAns))
 
             startActivity(intent)
         }

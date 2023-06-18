@@ -1,4 +1,7 @@
 package com.example.androidquiz.services
 
+import com.example.androidquiz.Category
+
 interface CategoryService {
+    fun getAllCategories():List<Category>
 }
