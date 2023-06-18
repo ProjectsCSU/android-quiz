@@ -6,4 +6,5 @@
     <string name="statistic_button">Статистика</string>
     <string name="exit_button">Выйти</string>
     <string name="title">ANDROID QUIZ</string>
+    <string name="header">category_name</string>
 </resources>

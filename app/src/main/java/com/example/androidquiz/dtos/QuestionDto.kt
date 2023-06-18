@@ -1,4 +1,4 @@
-package com.example.androidquiz.Dtos
+package com.example.androidquiz.dtos
 
 data class QuestionDto(val response_code: Int,
                   val results: List<ResultsItem>) {

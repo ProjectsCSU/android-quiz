@@ -1,6 +1,6 @@
-package com.example.androidquiz.Services
+package com.example.androidquiz.services
 
-import com.example.androidquiz.Dtos.QuestionDto
+import com.example.androidquiz.dtos.QuestionDto
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import java.net.URL
