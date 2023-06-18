@@ -7,4 +7,5 @@
     <string name="exit_button">Выйти</string>
     <string name="title">ANDROID QUIZ</string>
     <string name="header">category_name</string>
+    <string name="category_header">Select a category</string>
 </resources>
