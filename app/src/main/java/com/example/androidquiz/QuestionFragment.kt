@@ -10,24 +10,23 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
 
 class QuestionFragment(
-    val question: String,
-    val answers: Array<String>,
+    val questionAndAnswers: QuestionAndAnswersModel,
     val questionsAmount : Int,
     val currentQuestionIndex: Int) : Fragment() {
 
-    private lateinit var activity: MainActivity
+    private lateinit var activity: QuestionsActivity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_question, container, false)
 
-        activity = getActivity() as MainActivity
+        activity = getActivity() as QuestionsActivity
 
         val questionTextView = view.findViewById<TextView>(R.id.question_text_view)
-        questionTextView.text = question
+        questionTextView.text = questionAndAnswers.question
 
         val answerButtonsContainer = view.findViewById<LinearLayout>(R.id.answer_buttons_container)
-        for (answer in answers) {
+        for (answer in questionAndAnswers.answers) {
             val button = MaterialButton(activity)
 
             button.layoutParams = ViewGroup.LayoutParams(
@@ -36,7 +35,7 @@ class QuestionFragment(
             )
             button.text = answer
             button.setOnClickListener {
-                activity.onAnswerSelected(question, answer)
+                activity.onAnswerSelected(questionAndAnswers.question, answer)
             }
             answerButtonsContainer.addView(button)
         }

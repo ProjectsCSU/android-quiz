@@ -1,9 +1,11 @@
 package com.example.androidquiz
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.util.Log
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -20,58 +22,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Создаем экземпляр QuestionFragment
-        val questionFragment = QuestionFragment(questions[0], answers, questions.size, 0)
+        val button = findViewById<Button>(R.id.button)
+        val questAndCor = mapOf("123" to "1234",
+                                "456" to "4567")
+        val questAndAns = listOf(QuestionAndAnswersModel("123", arrayOf("1234", "45678")),
+                                  QuestionAndAnswersModel("456", arrayOf("1234", "4567")))
+        button.setOnClickListener {
 
-        // Получаем экземпляр FragmentManager для управления фрагментом
-        val fragmentManager: FragmentManager = supportFragmentManager
+            val intent = Intent(this, QuestionsActivity::class.java)
 
-        // Получаем экземпляр FragmentTransaction для управления транзакцией фрагмента
-        val transaction = fragmentManager.beginTransaction()
+            intent.putExtra("questAndAns", ArrayList(questAndAns))
+            intent.putExtra("questAndCor", HashMap(questAndCor))
 
-        // Добавляем QuestionFragment в контейнер
-        transaction.add(R.id.fragment_container, questionFragment)
-
-        // Подтверждаем транзакцию
-        transaction.commit()
-    }
-    private val questions = arrayOf(
-        "What is the capital of France?",
-        "What is the currency of Japan?",
-        "What is the largest country by area in the world?"
-    )
-
-    private val questionsAndAnswers = mapOf(
-        "What is the capital of France?" to "Paris",
-        "What is the currency of Japan?" to "Yen",
-        "What is the largest country by area in the world?" to "Russia"
-    )
-
-    private val answers = arrayOf("Paris", "Yen", "Russia")
-
-    private var currentQuestionIndex = 0
-
-    fun onAnswerSelected(question: String, answer: String) {
-
-        if (answer == questionsAndAnswers[question]) {
-            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Wrong answer", Toast.LENGTH_SHORT).show()
-        }
-        // Переходим к следующему вопросу
-        currentQuestionIndex++
-        if (currentQuestionIndex < questions.size) {
-            val questionFragment = QuestionFragment(questions[currentQuestionIndex], answers, questions.size, currentQuestionIndex)
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, questionFragment)
-                .commit()
-        } else {
-            Toast.makeText(this, "Quiz is finished", Toast.LENGTH_SHORT).show()
-            val questionFragment = QuestionFragment(questions[currentQuestionIndex - 1], answers, questions.size, currentQuestionIndex)
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, questionFragment)
-                .commit()
+            startActivity(intent)
         }
     }
-
 }
