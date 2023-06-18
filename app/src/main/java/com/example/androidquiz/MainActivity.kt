@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.util.Log
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
@@ -19,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Создаем экземпляр QuestionFragment
-        val questionFragment = QuestionFragment(questions[0], answers)
+        val questionFragment = QuestionFragment(questions[0], answers, questions.size, 0)
 
         // Получаем экземпляр FragmentManager для управления фрагментом
         val fragmentManager: FragmentManager = supportFragmentManager
@@ -50,21 +52,25 @@ class MainActivity : AppCompatActivity() {
     private var currentQuestionIndex = 0
 
     fun onAnswerSelected(question: String, answer: String) {
+
         if (answer == questionsAndAnswers[question]) {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "Wrong answer", Toast.LENGTH_SHORT).show()
         }
-
         // Переходим к следующему вопросу
         currentQuestionIndex++
         if (currentQuestionIndex < questions.size) {
-            val questionFragment = QuestionFragment(questions[currentQuestionIndex], answers)
+            val questionFragment = QuestionFragment(questions[currentQuestionIndex], answers, questions.size, currentQuestionIndex)
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, questionFragment)
                 .commit()
         } else {
             Toast.makeText(this, "Quiz is finished", Toast.LENGTH_SHORT).show()
+            val questionFragment = QuestionFragment(questions[currentQuestionIndex - 1], answers, questions.size, currentQuestionIndex)
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, questionFragment)
+                .commit()
         }
     }
 

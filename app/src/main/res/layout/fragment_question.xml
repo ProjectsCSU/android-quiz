@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="16dp"
+    style="@style/QuestionFragmentStyle">
 
     <TextView
         android:id="@+id/question_text_view"
@@ -10,20 +13,14 @@
         android:layout_height="wrap_content"
         android:text="What is the capital of France?"
         android:gravity="center"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        style="@style/AnswerButtonsContainerStyle"/>
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/answer_buttons_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/answer_buttons_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        </LinearLayout>
-
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    </LinearLayout>
 
 </LinearLayout>
