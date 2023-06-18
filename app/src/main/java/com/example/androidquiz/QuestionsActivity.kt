@@ -3,6 +3,7 @@ package com.example.androidquiz
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
 
 class QuestionsActivity : AppCompatActivity() {
@@ -29,21 +30,30 @@ class QuestionsActivity : AppCompatActivity() {
     }
 
     private var currentQuestionIndex = 0
+    private var correctAnswersAmount = 0
 
     fun onAnswerSelected(question: String, answer: String) {
         val correctAnswer = questionsAndCorrectAnswers[question]
         if (answer == correctAnswer) {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
+            correctAnswersAmount++
         } else {
             Toast.makeText(this, "Wrong answer", Toast.LENGTH_SHORT).show()
         }
-
-        currentQuestionIndex++
-
-        if (currentQuestionIndex < questionsAndAnswers.size) {
+        if(currentQuestionIndex < questionsAndAnswers.size - 1) {
+            currentQuestionIndex++
             renderFragment(currentQuestionIndex)
         } else {
             renderFragment(currentQuestionIndex - 1)
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("Quiz is finished, your score: $correctAnswersAmount")
+                .setCancelable(false)
+                .setPositiveButton("ОК") { dialog, which ->
+                    // Закрываем MessageBox
+                }
+
+            val dialog = builder.create()
+            dialog.show()
         }
     }
 
