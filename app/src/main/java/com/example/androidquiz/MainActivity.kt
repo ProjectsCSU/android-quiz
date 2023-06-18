@@ -40,15 +40,25 @@ class MainActivity : AppCompatActivity() {
             r_questAndCorAns.put(model.question, model.correct_answer)
         }
 
-        val button = findViewById<Button>(R.id.button)
-        button.setOnClickListener {
+        val startGameButton: Button = findViewById(R.id.start_button)
+        val statisticsButton: Button = findViewById(R.id.statistics_button)
+        val exitButton: Button = findViewById(R.id.exit_button)
 
+        startGameButton.setOnClickListener {
             val intent = Intent(this, QuestionsActivity::class.java)
 
             intent.putExtra("questAndAns", ArrayList(r_questAndAns))
             intent.putExtra("questAndCor", HashMap(r_questAndCorAns))
 
             startActivity(intent)
+        }
+
+        statisticsButton.setOnClickListener {
+            // Действия, выполняемые при нажатии на кнопку "Статистика"
+        }
+
+        exitButton.setOnClickListener {
+            finish() // Завершение приложения при нажатии на кнопку "Выйти"
         }
     }
 }
