@@ -36,10 +36,10 @@ class CategoryFragment : Fragment() {
             categoryAdapter.submitList(listOf(
                 Category("Math", R.drawable.math),
                 Category("Geography", R.drawable.geography),
-                Category("History", R.drawable.math),
-                Category("Art", R.drawable.math),
-                Category("Sports", R.drawable.math),
-                Category("Animals", R.drawable.math))
+                Category("History", R.drawable.history),
+                Category("Art", R.drawable.art),
+                Category("Sports", R.drawable.sports),
+                Category("Animals", R.drawable.animals))
             )
         }
 
