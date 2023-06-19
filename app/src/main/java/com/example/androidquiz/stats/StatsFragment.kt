@@ -44,7 +44,6 @@ class StatsFragment(val statistics: StatisticsDto) : Fragment() {
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        // Создаем TextView для отображения категории
         val categoryTextView = TextView(context)
         categoryTextView.text = category
         categoryTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36F)
@@ -56,9 +55,8 @@ class StatsFragment(val statistics: StatisticsDto) : Fragment() {
         )
         categoryTextView.gravity = Gravity.START or Gravity.CENTER_VERTICAL
 
-        // Создаем TextView для отображения количества очков
         val pointsTextView = TextView(context)
-        pointsTextView.text = points.toString()
+        pointsTextView.text = "Score: $points"
         pointsTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36F)
         pointsTextView.setTextColor(ContextCompat.getColor(activity, R.color.black))
         pointsTextView.layoutParams = LinearLayout.LayoutParams(
