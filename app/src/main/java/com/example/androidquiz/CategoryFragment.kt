@@ -35,7 +35,7 @@ class CategoryFragment : Fragment() {
 
         viewModel.categories.observe(viewLifecycleOwner) {
             categoryAdapter.submitList(listOf(
-                Category("Mythology", R.drawable.math),
+                Category("Mythology", R.drawable.mythology),
                 Category("Geography", R.drawable.geography),
                 Category("History", R.drawable.history),
                 Category("Art", R.drawable.art),

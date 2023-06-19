@@ -10,8 +10,9 @@
     
     <TextView
         android:text="@string/category_header"
-        android:textColor="#ffffff"
-        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat_regular"
+        android:textSize="35sp"
         android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
