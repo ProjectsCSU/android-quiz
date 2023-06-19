@@ -1,5 +1,6 @@
 package com.example.androidquiz
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -35,10 +36,7 @@ class QuestionsActivity : AppCompatActivity() {
     fun onAnswerSelected(question: String, answer: String) {
         val correctAnswer = questionsAndCorrectAnswers[question]
         if (answer == correctAnswer) {
-            Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
             correctAnswersAmount++
-        } else {
-            Toast.makeText(this, "Wrong answer", Toast.LENGTH_SHORT).show()
         }
         if(currentQuestionIndex < questionsAndAnswers.size - 1) {
             currentQuestionIndex++
@@ -48,10 +46,10 @@ class QuestionsActivity : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
             builder.setMessage("Quiz is finished, your score: $correctAnswersAmount")
                 .setCancelable(false)
-                .setPositiveButton("ОК") { dialog, which ->
-                    // Закрываем MessageBox
+                .setPositiveButton("Go to menu") { dialog, which ->
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                 }
-
             val dialog = builder.create()
             dialog.show()
         }
