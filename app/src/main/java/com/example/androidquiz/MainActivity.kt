@@ -2,16 +2,16 @@ package com.example.androidquiz
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.StrictMode
-import android.os.StrictMode.ThreadPolicy
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.example.androidquiz.services.QuestionRequestsService
+import com.example.androidquiz.stats.StatisticsActivity
+import com.example.androidquiz.stats.service.StatisticsService
+import java.io.File
+import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        val policy = ThreadPolicy.Builder().permitAll().build()
-        StrictMode.setThreadPolicy(policy)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -25,11 +25,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         statisticsButton.setOnClickListener {
-            // Действия, выполняемые при нажатии на кнопку "Статистика"
+            val fileName = "stats.txt"
+            val directory = this.filesDir
+            val file = File(directory, fileName)
+            try {
+                if(!file.exists()){
+                    file.createNewFile()
+                    val statService = StatisticsService(this)
+                    statService.writeObjectToFile(statService.initStatistics(), file)
+                }
+            } catch (ex: IOException) {
+            }
+            val intent = Intent(this, StatisticsActivity::class.java)
+            intent.putExtra("stats", file)
+            startActivity(intent)
         }
 
         exitButton.setOnClickListener {
-            finish() // Завершение приложения при нажатии на кнопку "Выйти"
+            finish()
         }
     }
 }

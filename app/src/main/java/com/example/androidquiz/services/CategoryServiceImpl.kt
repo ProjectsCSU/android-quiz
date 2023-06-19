@@ -24,4 +24,16 @@ class CategoryServiceImpl @Inject constructor() : CategoryService {
             else -> throw Exception("Category is not found")
         }
     }
+
+    override fun getCategoryTitle(categoryId: String): String {
+        return when (categoryId) {
+            "20" -> "Mythology"
+            "22" -> "Geography"
+            "23" -> "History"
+            "25" -> "Art"
+            "21" -> "Sports"
+            "27" -> "Animals"
+            else -> throw Exception("Category is not found")
+        }
+    }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidquiz.dtos.QuestionDto
 import com.example.androidquiz.services.CategoryService
 import com.example.androidquiz.services.QuestionRequestsService
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class CategoryAdapter: ListAdapter<Category, CategoryAdapter.CategoryHolder>(CategoryComparator()) {
@@ -76,15 +77,20 @@ class CategoryAdapter: ListAdapter<Category, CategoryAdapter.CategoryHolder>(Cat
                 selectedQuestionCount.toString(),
                 categoryService.getCategoryValue(title),
                 selectedDifficulty.lowercase())
-            val questionsModel = service.serializeQuestions(response)
+            val questionsModel : QuestionDto
+            runBlocking {
+                val result = response.await()
+                questionsModel = service.serializeQuestions(result)
+            }
             val questionsAndAnswers = getQuestionsAndAnswers(questionsModel)
 
             val intent = Intent(it.context, QuestionsActivity::class.java)
             intent.putExtra("questAndAns", ArrayList(questionsAndAnswers.r_questAndAns))
             intent.putExtra("questAndCor", HashMap(questionsAndAnswers.r_questAndCorAns))
+            intent.putExtra("category", categoryService.getCategoryTitle(categoryService.getCategoryValue(title)))
             it.context.startActivity(intent)
         } catch(e: Exception) {
-
+            print(e.message)
             val intent = Intent(it.context, MainActivity::class.java)
             it.context.startActivity(intent)
         }
