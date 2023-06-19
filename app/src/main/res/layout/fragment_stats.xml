@@ -3,14 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".stats.StatsFragment">
+    tools:context=".stats.StatsFragment"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:id="@+id/stats_container"
-        android:orientation="vertical">
+        android:padding="15dp">
 
     </LinearLayout>
-
 </FrameLayout>
