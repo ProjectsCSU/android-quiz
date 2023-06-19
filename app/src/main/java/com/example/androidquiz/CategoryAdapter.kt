@@ -1,28 +1,31 @@
 package com.example.androidquiz
 
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidquiz.services.CategoryService
 import com.example.androidquiz.services.QuestionRequestsService
+import javax.inject.Inject
 
-class CategoryAdapter() : ListAdapter<Category, CategoryAdapter.CategoryHolder>(CategoryComparator()) {
+class CategoryAdapter: ListAdapter<Category, CategoryAdapter.CategoryHolder>(CategoryComparator()) {
+    @Inject
+    lateinit var categoryService: CategoryService
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryHolder {
         return CategoryHolder.create(parent, viewType)
     }
-
     override fun onBindViewHolder(holder: CategoryHolder, position: Int) {
         holder.bind(getItem(position))
+        DaggerAppComponent.create().injectCategoryAdapter(this)
         holder.itemView.setOnClickListener {
             val service = QuestionRequestsService()
-            val response = service.getQuestions("10", "20", "easy")
+            val title = it.findViewById<TextView>(R.id.title).text.toString()
+            val response = service.getQuestions("10", categoryService.getCategoryValue(title), "easy")
             val questionsModel = service.serializeQuestions(response)
             val r_questAndAns: MutableList<QuestionAndAnswersModel> = mutableListOf()
             val r_questAndCorAns: HashMap<String, String> = hashMapOf()
@@ -36,10 +39,10 @@ class CategoryAdapter() : ListAdapter<Category, CategoryAdapter.CategoryHolder>(
                 r_questAndAns.add(questAndAnsw)
                 r_questAndCorAns.put(model.question, model.correct_answer)
             }
-            val intent = Intent(holder.itemView.context, QuestionsActivity::class.java)
+            val intent = Intent(it.context, QuestionsActivity::class.java)
             intent.putExtra("questAndAns", ArrayList(r_questAndAns))
             intent.putExtra("questAndCor", HashMap(r_questAndCorAns))
-            holder.itemView.context.startActivity(intent)
+            it.context.startActivity(intent)
         }
     }
     class CategoryHolder(private val binding: View) : RecyclerView.ViewHolder(binding) {
@@ -65,6 +68,5 @@ class CategoryAdapter() : ListAdapter<Category, CategoryAdapter.CategoryHolder>(
         override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
             return oldItem == newItem
         }
-
     }
 }

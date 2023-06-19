@@ -9,14 +9,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidquiz.databinding.FragmentCategoryBinding
+import com.example.androidquiz.services.CategoryService
 import javax.inject.Inject
 
 class CategoryFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
     @Inject
     lateinit var viewModel: CategoryViewModel
+
     private val categoryAdapter = CategoryAdapter()
 
     override fun onCreateView(
@@ -34,7 +35,7 @@ class CategoryFragment : Fragment() {
 
         viewModel.categories.observe(viewLifecycleOwner) {
             categoryAdapter.submitList(listOf(
-                Category("Math", R.drawable.math),
+                Category("Mythology", R.drawable.math),
                 Category("Geography", R.drawable.geography),
                 Category("History", R.drawable.history),
                 Category("Art", R.drawable.art),
