@@ -1,9 +1,13 @@
 package com.example.androidquiz
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.androidquiz.stats.StatisticsActivity
@@ -42,8 +46,23 @@ class MainActivity : AppCompatActivity() {
         val exitButton: Button = findViewById(R.id.exit_button)
 
         startGameButton.setOnClickListener {
-            val intent = Intent(this, CategorySelectActivity::class.java)
-            startActivity(intent)
+            val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = connectivityManager.activeNetworkInfo
+            if (networkInfo == null || !networkInfo.isConnected) {
+                val builder = AlertDialog.Builder(this)
+                builder.setMessage("Unable to connect to the internet, try again...")
+                    .setCancelable(false)
+                    .setPositiveButton("Go to menu") { dialog, which ->
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                val dialog = builder.create()
+                dialog.show()
+            }
+            else {
+                val intent = Intent(this, CategorySelectActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         statisticsButton.setOnClickListener {
