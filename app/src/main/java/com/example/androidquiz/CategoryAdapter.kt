@@ -26,47 +26,26 @@ class CategoryAdapter: ListAdapter<Category, CategoryAdapter.CategoryHolder>(Cat
         holder.bind(getItem(position))
         DaggerAppComponent.create().injectCategoryAdapter(this)
         holder.itemView.setOnClickListener {
-            val questionCountItems = arrayOf("10 questions", "20 questions", "30 questions")
             val difficultyItems = arrayOf("Easy", "Medium", "Hard")
-            var selectedQuestionCount = -1
+            val selectedQuestionCount = 10
             var selectedDifficulty = ""
 
-            val builder = AlertDialog.Builder(it.context)
-
-            builder.setTitle("Enter count of questions")
-
-            builder.setSingleChoiceItems(questionCountItems, -1) { _, which ->
-                selectedQuestionCount = when (which) {
-                    0 -> 10
-                    1 -> 20
-                    2 -> 30
-                    else -> -1
+            AlertDialog.Builder(it.context)
+                .setTitle("Enter difficulty")
+                .setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.cancel()
                 }
-            }
-            builder.setPositiveButton("Continue") { _, _ ->
-                AlertDialog.Builder(it.context)
-                    .setTitle("Enter difficulty")
-                    .setNegativeButton("Cancel") { dialog, _ ->
-                        dialog.cancel()
-                    }
-                    .setPositiveButton("Start test") { _, _ ->
-                        moveToActivity(it, selectedQuestionCount, selectedDifficulty)
-                    }
-                    .setSingleChoiceItems(difficultyItems, -1) { _, which ->
-                        selectedDifficulty = when (which) {
+                .setPositiveButton("Start test") { _, _ ->
+                    moveToActivity(it, selectedQuestionCount, selectedDifficulty)
+                }
+                .setSingleChoiceItems(difficultyItems, -1) { _, which ->
+                    selectedDifficulty = when (which) {
                         0 -> "easy"
                         1 -> "medium"
                         2 -> "hard"
                         else -> ""
                     }
                 }.show()
-            }
-
-            builder.setNegativeButton("Cancel") { dialog, _ ->
-                dialog.cancel()
-            }
-
-            builder.show()
         }
     }
     private fun moveToActivity(it: View, selectedQuestionCount: Int, selectedDifficulty: String) {
