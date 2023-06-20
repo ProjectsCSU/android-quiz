@@ -18,7 +18,7 @@ class CategoryServiceImpl @Inject constructor() : CategoryService {
             "mythology" -> "20"
             "geography" -> "22"
             "history" -> "23"
-            "art" -> "25"
+            "art" -> "15"
             "sports" -> "21"
             "animals" -> "27"
             else -> throw Exception("Category is not found")
